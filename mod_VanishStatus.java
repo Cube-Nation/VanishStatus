@@ -27,7 +27,7 @@ public class mod_VanishStatus extends BaseMod
 
     public String getVersion() 
     {
-        return "v1.0";
+        return "v1.1";
     }
 
     public void load() 
@@ -72,7 +72,7 @@ public class mod_VanishStatus extends BaseMod
     {
         if (packet250custompayload.channel.equalsIgnoreCase("vanishStatus"))
         {
-            handleMCMessage(new String(packet250custompayload.data));
+            handleMCMessage(packet250custompayload.data);
         }
     }
     
@@ -82,10 +82,10 @@ public class mod_VanishStatus extends BaseMod
         receiveCustomPacket(packet250custompayload);
     }
     
-    private void handleMCMessage(String message)
+    private void handleMCMessage(byte[] message)
     {
-        System.out.println("[VanishStatus] Got a message: " + message);
-        isVanished = message.equalsIgnoreCase("vanishActive");
+        isVanished = message.length > 0 && message[0] == 0x01;
+        System.out.println("[VanishStatus] Got vanish status: " + (isVanished ? "vanished" : "visible") );
     }
     
     // ModLoader @ MC 1.2.5
