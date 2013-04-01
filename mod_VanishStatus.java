@@ -27,7 +27,7 @@ public class mod_VanishStatus extends BaseMod
 
     public String getVersion() 
     {
-        return "v1.1";
+        return "1.2";
     }
 
     public void load() 
@@ -63,7 +63,7 @@ public class mod_VanishStatus extends BaseMod
         plugin.channel = channel;
         plugin.data = message.getBytes();
         plugin.length = message.length();
-        ModLoader.getMinecraftInstance().getSendQueue().addToSendQueue(plugin);
+        ModLoader.getMinecraftInstance().getNetHandler().addToSendQueue(plugin);
     }
 
     
