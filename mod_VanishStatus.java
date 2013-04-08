@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import org.lwjgl.opengl.GL11;
 import net.minecraft.client.Minecraft;
@@ -58,12 +59,13 @@ public class mod_VanishStatus extends BaseMod
         return true;
     }
     
-    public static void sendMessage(String channel, String message) {
+    public static void sendMessage(String channel, String message, NetClientHandler netclienthandler) {
         Packet250CustomPayload plugin = new Packet250CustomPayload();
         plugin.channel = channel;
         plugin.data = message.getBytes();
         plugin.length = message.length();
-        ModLoader.getMinecraftInstance().getNetHandler().addToSendQueue(plugin);
+		
+		netclienthandler.addToSendQueue(plugin);
     }
 
     
@@ -90,7 +92,7 @@ public class mod_VanishStatus extends BaseMod
     
     // ModLoader @ MC 1.2.5
     public void serverConnect(NetClientHandler netclienthandler) {
-        sendMessage("vanishStatus", "check");
+        sendMessage("vanishStatus", "check", netclienthandler);
     }
 
     // ModLoader @ MC 1.3+
